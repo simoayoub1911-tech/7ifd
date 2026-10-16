@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with study streaks, preferences, and language settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "avatarUrl": { "type": "string", "maxLength": 50 },
+        "dailyGoal": { "type": "number" },
+        "streak": { "type": "number" },
+        "totalReviews": { "type": "number" },
+        "cardsLearned": { "type": "number" },
+        "preferredVoice": { "type": "string", "enum": ["gemini", "native"] },
+        "geminiVoiceName": { "type": "string", "maxLength": 50 },
+        "interfaceLanguage": { "type": "string", "maxLength": 10 },
+        "bookmarkedCardIds": { "type": "array" },
+        "lastStudiedDate": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["uid", "displayName"]
+    },
+    "Deck": {
+      "title": "Deck",
+      "description": "A flashcard deck containing language study cards",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 500 },
+        "targetLanguage": { "type": "string", "maxLength": 10 },
+        "nativeLanguage": { "type": "string", "maxLength": 10 },
+        "level": { "type": "string", "maxLength": 10 },
+        "category": { "type": "string", "maxLength": 50 },
+        "domainId": { "type": "string", "maxLength": 50 },
+        "color": { "type": "string", "maxLength": 20 },
+        "cardCount": { "type": "number" },
+        "dueCardCount": { "type": "number" },
+        "masteredCardCount": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "ownerId", "title", "targetLanguage", "nativeLanguage"]
+    },
+    "Card": {
+      "title": "Card",
+      "description": "A flashcard item with SM-2 spaced repetition state",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "deckId": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "front": { "type": "string", "maxLength": 300 },
+        "back": { "type": "string", "maxLength": 500 },
+        "targetLanguage": { "type": "string", "maxLength": 10 },
+        "nativeLanguage": { "type": "string", "maxLength": 10 },
+        "phonetic": { "type": "string", "maxLength": 150 },
+        "transliteration": { "type": "string", "maxLength": 150 },
+        "exampleSentence": { "type": "string", "maxLength": 500 },
+        "exampleTranslation": { "type": "string", "maxLength": 500 },
+        "tags": { "type": "array" },
+        "isBookmarked": { "type": "boolean" },
+        "srsState": { "type": "object" },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "deckId", "ownerId", "front", "back", "targetLanguage", "nativeLanguage"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile with study metrics and streak"
+    },
+    "/users/{userId}/decks/{deckId}": {
+      "schema": "Deck",
+      "description": "User flashcard decks"
+    },
+    "/users/{userId}/decks/{deckId}/cards/{cardId}": {
+      "schema": "Card",
+      "description": "Individual flashcards with SM-2 retention metrics"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "7ifd - Spaced Repetition Language Platform",
+  "description": "Offline-first spaced repetition language learning platform with 11 languages, CEFR packs, SM-2 algorithm, and Gemini speech.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
